@@ -1,52 +1,93 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-import { useState } from 'react'
-import useSWR from 'swr'
+import { useState } from "react";
+import useSWR from "swr";
 // import { motion } from 'framer-motion'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { CookingPot, Calendar, Package, DollarSign, Palette, GraduationCap, Menu, Bell, Search, User } from 'lucide-react'
-import RecipeChart from './charts/RecipeChart'
-import VideoScheduleChart from './charts/VideoScheduleChart'
-import InventoryChart from './charts/InventoryChart'
-import FinancialChart from './charts/FinancialChart'
-import CreativeToolsChart from './charts/CreativeToolsChart'
-import EducationChart from './charts/EducationChart'
+import {
+  CookingPot,
+  Calendar,
+  Package,
+  DollarSign,
+  Palette,
+  GraduationCap,
+  Menu,
+  Bell,
+  Search,
+  User,
+} from "lucide-react";
+import RecipeChart from "./charts/RecipeChart";
+import VideoScheduleChart from "./charts/VideoScheduleChart";
+import InventoryChart from "./charts/InventoryChart";
+import FinancialChart from "./charts/FinancialChart";
+import CreativeToolsChart from "./charts/CreativeToolsChart";
+import EducationChart from "./charts/EducationChart";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { data, error } = useSWR('/api/dashboard', fetcher)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data, error } = useSWR("/api/dashboard", fetcher);
 
-  if (error) return <div>Failed to load dashboard data</div>
-  if (!data) return <div>Loading...</div>
+  if (error) return <div>Failed to load dashboard data</div>;
+  if (!data) return <div>Loading...</div>;
 
-  const { recipes, videoEvents, inventory, transactions, videoTemplates, educationalResources } = data
+  const {
+    recipes,
+    videoEvents,
+    inventory,
+    transactions,
+    videoTemplates,
+    educationalResources,
+  } = data;
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className={`bg-white w-64 min-h-screen p-4 ${sidebarOpen ? '' : 'hidden'} md:block`}>
+      <aside
+        className={`bg-white w-64 min-h-screen p-4 ${
+          sidebarOpen ? "" : "hidden"
+        } md:block`}
+      >
         <nav className="mt-8">
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <CookingPot className="inline-block mr-2" /> Recipes
           </a>
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <Calendar className="inline-block mr-2" /> Schedule
           </a>
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <Package className="inline-block mr-2" /> Inventory
           </a>
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <DollarSign className="inline-block mr-2" /> Finances
           </a>
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <Palette className="inline-block mr-2" /> Creative Tools
           </a>
-          <a className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900" href="#">
+          <a
+            className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900"
+            href="#"
+          >
             <GraduationCap className="inline-block mr-2" /> Education
           </a>
         </nav>
@@ -58,10 +99,15 @@ export default function Dashboard() {
         <header className="bg-white shadow-lg">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center">
-              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden"
+              >
                 <Menu className="h-6 w-6" />
               </button>
-              <h1 className="text-xl font-semibold text-gray-800 ml-4">Content Creator ERP Dashboard</h1>
+              <h1 className="text-xl font-semibold text-gray-800 ml-4">
+                Content Creator ERP Dashboard
+              </h1>
             </div>
             <div className="flex items-center">
               <div className="relative">
@@ -101,7 +147,12 @@ export default function Dashboard() {
                   <CardTitle>Upcoming Videos</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-4xl font-bold">{videoEvents.filter(e => new Date(e.date) > new Date()).length}</p>
+                  <p className="text-4xl font-bold">
+                    {
+                      videoEvents.filter((e: any) => new Date(e.date) > new Date())
+                        .length
+                    }
+                  </p>
                 </CardContent>
               </Card>
               <Card>
@@ -109,7 +160,9 @@ export default function Dashboard() {
                   <CardTitle>Low Stock Items</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-4xl font-bold">{inventory.filter(i => i.quantity < 5).length}</p>
+                  <p className="text-4xl font-bold">
+                    {inventory.filter((i: any) => i.quantity < 5).length}
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -174,5 +227,5 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-  )
+  );
 }
